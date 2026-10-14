@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatIDo — variant 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Onest', sans-serif; background: #FAF9F7; padding: 80px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #9CA3AF;
+    border-left: 3px solid #7C3AED; padding-left: 12px;
+    margin-bottom: 40px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* Карточка */
+  .card {
+    background: #fff;
+    border: 1px solid #E0DDD8;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(124,58,237,0.10);
+    border-color: #C4B5FD;
+  }
+
+  /* Верхняя зона — основная */
+  .card-top {
+    padding: 40px 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    background: #F3EDFF;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-size: 22px; font-weight: 700;
+    color: #0A0A0A; line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .card-text {
+    font-size: 17px; line-height: 1.8; color: #333;
+  }
+
+  /* Нижняя зона — «Для кого» */
+  .card-bottom {
+    background: #F3EDFF;
+    border-top: 1px solid #DDD6FE;
+    padding: 24px 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-for-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #7C3AED; opacity: 0.6;
+  }
+
+  .card-for-text {
+    font-size: 15px; line-height: 1.55; color: #4C1D95;
+    font-weight: 500;
+  }
+
+  .card-btn {
+    display: inline-block;
+    align-self: flex-start;
+    background: #7C3AED;
+    color: #fff;
+    font-size: 14px; font-weight: 600;
+    font-family: 'Onest', sans-serif;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<p class="section-label">Чем я помогаю</p>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="card-top">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <h3 class="card-title">Найду где теряются деньги и смыслы</h3>
+      </div>
+      <p class="card-text">Разберу текущую маркетинговую стратегию, позиционирование и команду. Покажу где узкие места, что работает вхолостую и где реальный потенциал роста. Выдам конкретный план действий — не презентацию ради презентации.</p>
+    </div>
+    <div class="card-bottom">
+      <span class="card-for-label">Для кого</span>
+      <p class="card-for-text">Бренды и компании которые чувствуют что маркетинг работает не на полную, но не понимают почему.</p>
+      <a href="#" class="card-btn">Обсудить →</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"/><path d="m7.5 4.27 9 5.15"/></svg>
+        </div>
+        <h3 class="card-title">Упакую бренд так чтобы его покупали</h3>
+      </div>
+      <p class="card-text">Разработаю позиционирование, платформу бренда и креативную концепцию. От стратегии до визуального языка и первых кампаний.</p>
+    </div>
+    <div class="card-bottom">
+      <span class="card-for-label">Для кого</span>
+      <p class="card-for-text">Новые продукты которым нужна идентичность, и зрелые бренды которым нужно обновление.</p>
+      <a href="#" class="card-btn">Обсудить →</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        </div>
+        <h3 class="card-title">Сделаю кампанию которую запомнят</h3>
+      </div>
+      <p class="card-text">Придумаю идею, соберу команду, запущу. Полный цикл от брифа до оценки результатов. Работал с бюджетами 500М+ рублей и без бюджета — знаю как получить результат в обоих случаях.</p>
+    </div>
+    <div class="card-bottom">
+      <span class="card-for-label">Для кого</span>
+      <p class="card-for-text">Бизнесы которым нужна большая идея и партнёр который доведёт её до экрана.</p>
+      <a href="#" class="card-btn">Обсудить →</a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

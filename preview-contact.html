@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — watermark quote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Onest', sans-serif; background: #f0ece8; padding: 48px 0; display: flex; flex-direction: column; gap: 32px; }
+
+  .lbl { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 10px; }
+
+  .block {
+    background: #FAF7FF;
+    border-top: 1px solid #E0DDD8;
+    border-bottom: 1px solid #E0DDD8;
+    padding: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 320px;
+    overflow: hidden;
+  }
+
+  /* Контейнер: кавычка выровнена по нижней части heading */
+  .inner {
+    position: relative;
+    display: flex;
+    align-items: flex-end; /* ключевое — bottom-align */
+  }
+
+  .quote {
+    position: absolute;
+    font-family: Georgia, serif;
+    color: #7C3AED;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+    left: -0.06em;
+    bottom: -0.05em; /* низ em-бокса = низ heading → curls за текстом */
+  }
+
+  .heading {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-weight: 900;
+    color: #141414;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .btn {
+    flex-shrink: 0;
+    display: inline-block;
+    font-size: 22px; font-weight: 600;
+    font-family: 'Onest', sans-serif;
+    text-decoration: none;
+    padding: 22px 48px;
+    background: #7C3AED;
+    color: #fff;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<div>
+  <p class="lbl">A — 220px, opacity 0.10</p>
+  <div class="block">
+    <div class="inner">
+      <span class="quote" style="font-size:220px;opacity:0.10">„</span>
+      <h2 class="heading">Обсудим вашу задачу?</h2>
+    </div>
+    <a href="#" class="btn">Обсудить →</a>
+  </div>
+</div>
+
+<div>
+  <p class="lbl">B — 300px, opacity 0.09</p>
+  <div class="block">
+    <div class="inner">
+      <span class="quote" style="font-size:300px;opacity:0.09">„</span>
+      <h2 class="heading">Обсудим вашу задачу?</h2>
+    </div>
+    <a href="#" class="btn">Обсудить →</a>
+  </div>
+</div>
+
+<div>
+  <p class="lbl">C — 380px, opacity 0.08</p>
+  <div class="block">
+    <div class="inner">
+      <span class="quote" style="font-size:380px;opacity:0.08">„</span>
+      <h2 class="heading">Обсудим вашу задачу?</h2>
+    </div>
+    <a href="#" class="btn">Обсудить →</a>
+  </div>
+</div>
+
+</body>
+</html>

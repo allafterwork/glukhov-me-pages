@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrow variants</title>
+<style>
+  body { font-family: 'Onest Variable', system-ui, sans-serif; background: #FAFAF7; margin: 0; padding: 48px; display: flex; gap: 48px; align-items: flex-start; }
+  h3 { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #9CA3AF; margin: 0 0 16px; }
+
+  /* ── Drum mockup shared ── */
+  .drum { display: flex; flex-direction: column; width: 260px; }
+  .drum-viewport {
+    position: relative;
+    overflow: hidden;
+    height: 276px;
+    background: #FAFAF7;
+  }
+  .drum-viewport::before, .drum-viewport::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 52px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .drum-viewport::before { top: 0; background: linear-gradient(to bottom, #FAFAF7 15%, transparent); }
+  .drum-viewport::after  { bottom: 0; background: linear-gradient(to top, #FAFAF7 15%, transparent); }
+
+  .drum-track { display: flex; flex-direction: column; gap: 12px; padding: 4px 0; }
+  .card {
+    background: white;
+    border: 1px solid #E0DDD8;
+    border-radius: 14px;
+    padding: 18px 20px;
+    height: 84px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #141414;
+    flex-shrink: 0;
+  }
+  .num {
+    font-size: 11px; font-weight: 700; color: #9CA3AF;
+    background: #F3F4F6; border-radius: 6px;
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── VARIANT A: ghost arrows inside gradient zone ── */
+  .variant-a .drum-wrap {
+    position: relative;
+  }
+  .variant-a .arrow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #7C3AED;
+    opacity: 0.45;
+    padding: 4px 12px;
+    transition: opacity 0.15s;
+  }
+  .variant-a .arrow:hover { opacity: 1; }
+  .variant-a .arrow--up   { top: 4px; }
+  .variant-a .arrow--down { bottom: 4px; }
+  .variant-a svg { display: block; }
+
+  /* ── VARIANT B: thin pill buttons flush to viewport edges ── */
+  .variant-b .drum-wrap { position: relative; }
+  .variant-b .arrow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    background: rgba(255,255,255,0.85);
+    border: 1px solid #E8E4F0;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #7C3AED;
+    padding: 3px 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .variant-b .arrow:hover { opacity: 1; border-color: #C4B5FD; }
+  .variant-b .arrow--up   { top: 6px; }
+  .variant-b .arrow--down { bottom: 6px; }
+</style>
+</head>
+<body>
+
+<!-- VARIANT A -->
+<div>
+  <h3>Вариант A — невидимые стрелки</h3>
+  <div class="drum variant-a">
+    <div class="drum-wrap">
+      <button class="arrow arrow--up">
+        <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 9L9 1L17 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="drum-viewport">
+        <div class="drum-track">
+          <div class="card"><span class="num">02</span>Вирусная кампания с Тимати</div>
+          <div class="card"><span class="num">03</span>Новогодняя кампания</div>
+          <div class="card"><span class="num">04</span>Ребрендинг и инфлюенсер</div>
+          <div class="card" style="opacity:0.35"><span class="num">05</span>Off-air промо</div>
+        </div>
+      </div>
+      <button class="arrow arrow--down">
+        <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 1L9 9L17 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+  <p style="font-size:12px;color:#888;margin-top:12px">Стрелки плавают внутри gradient-зоны.<br>Незаметны, появляются при наведении.</p>
+</div>
+
+<!-- VARIANT B -->
+<div>
+  <h3>Вариант B — pill-стрелки</h3>
+  <div class="drum variant-b">
+    <div class="drum-wrap">
+      <button class="arrow arrow--up">
+        <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 6L6 1L11 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        ещё
+      </button>
+      <div class="drum-viewport">
+        <div class="drum-track">
+          <div class="card"><span class="num">02</span>Вирусная кампания с Тимати</div>
+          <div class="card"><span class="num">03</span>Новогодняя кампания</div>
+          <div class="card"><span class="num">04</span>Ребрендинг и инфлюенсер</div>
+          <div class="card" style="opacity:0.35"><span class="num">05</span>Off-air промо</div>
+        </div>
+      </div>
+      <button class="arrow arrow--down">
+        <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        ещё
+      </button>
+    </div>
+  </div>
+  <p style="font-size:12px;color:#888;margin-top:12px">Тонкий pill поверх градиента.<br>Полупрозрачный, с blur.</p>
+</div>
+
+</body>
+</html>
