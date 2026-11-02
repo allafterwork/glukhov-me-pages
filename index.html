@@ -126,10 +126,14 @@
       return clone;
     });
 
-    const previousSet = cloneSet(sourceCards, 'previous');
-    const nextSet = cloneSet(sourceCards, 'next');
-    previousSet.reverse().forEach(card => casesCarousel.prepend(card));
-    nextSet.forEach(card => casesCarousel.append(card));
+    const bufferSetCount = desktopCases.matches ? 3 : 1;
+    for (let setIndex = 0; setIndex < bufferSetCount; setIndex += 1) {
+      const previousSet = cloneSet(sourceCards, `previous-${setIndex + 1}`);
+      const nextSet = cloneSet(sourceCards, `next-${setIndex + 1}`);
+      previousSet.reverse().forEach(card => casesCarousel.prepend(card));
+      nextSet.forEach(card => casesCarousel.append(card));
+    }
+    const initialVisualIndex = bufferSetCount * count;
 
     const loadPreview = (preview) => {
       if (!(preview instanceof HTMLElement) || preview.dataset.previewLoaded === 'true') return;
@@ -149,20 +153,19 @@
         }, { root: casesCarousel, rootMargin: '0px 120%', threshold: 0.01 })
       : null;
 
-    const previewImages = Array.from(casesCarousel.querySelectorAll('.mobile-case-preview-image'));
+    const registerPreviews = (cards) => {
+      cards.forEach((card) => card.querySelectorAll('.mobile-case-preview-image').forEach((preview) => {
+        if (previewObserver) previewObserver.observe(preview);
+        else loadPreview(preview);
 
-    previewImages.forEach((preview) => {
-      if (previewObserver) previewObserver.observe(preview);
-      else loadPreview(preview);
-    });
-
-    if (desktopCases.matches) {
-      previewImages.forEach((preview) => {
+        if (!desktopCases.matches) return;
         const card = preview.closest('.mobile-case-card');
         if (!(card instanceof HTMLElement)) return;
         if (card.dataset.caseId === 'c1' || card.dataset.caseId === 'c21') loadPreview(preview);
-      });
-    }
+      }));
+    };
+
+    registerPreviews(Array.from(casesCarousel.querySelectorAll('.mobile-case-card')));
 
     const allCards = () => Array.from(casesCarousel.querySelectorAll('.mobile-case-card'));
     const step = () => {
@@ -189,6 +192,24 @@
       });
     };
 
+    let extraSet = 0;
+    const appendNextSet = () => {
+      const cards = cloneSet(sourceCards, `next-${++extraSet}`);
+      cards.forEach(card => casesCarousel.append(card));
+      registerPreviews(cards);
+    };
+
+    const prependPreviousSet = () => {
+      const cardStep = step();
+      const currentLeft = casesCarousel.scrollLeft;
+      const cards = cloneSet(sourceCards, `previous-${++extraSet}`);
+      const fragment = document.createDocumentFragment();
+      cards.forEach(card => fragment.append(card));
+      casesCarousel.prepend(fragment);
+      registerPreviews(cards);
+      jumpTo(currentLeft + count * cardStep);
+    };
+
     const currentVisualIndex = () => {
       const cardStep = step();
       return cardStep ? Math.round(casesCarousel.scrollLeft / cardStep) : count;
@@ -200,7 +221,7 @@
       if (!cardStep) return;
       let visualIndex = currentVisualIndex();
 
-      if (normalize && !animating && !dragging) {
+      if (normalize && !animating && !dragging && !desktopCases.matches) {
         if (visualIndex < count) {
           visualIndex += count;
           jumpTo(visualIndex * cardStep);
@@ -247,11 +268,20 @@
     const moveBy = (direction) => {
       const cardStep = step();
       if (!cardStep) return;
-      animateTo((currentVisualIndex() + direction) * cardStep);
+      let visualIndex = currentVisualIndex();
+
+      if (desktopCases.matches && direction > 0 && visualIndex >= allCards().length - 1) {
+        appendNextSet();
+      } else if (desktopCases.matches && direction < 0 && visualIndex <= 0) {
+        prependPreviousSet();
+        visualIndex += count;
+      }
+
+      animateTo((visualIndex + direction) * cardStep);
     };
 
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      jumpTo(count * step());
+      jumpTo(initialVisualIndex * step());
       requestAnimationFrame(() => updateActive(false));
     }));
 
@@ -279,6 +309,13 @@
       if (!(event instanceof PointerEvent) || event.pointerType === 'touch') return;
       window.cancelAnimationFrame(animationFrame);
       animating = false;
+
+      if (desktopCases.matches) {
+        const visualIndex = currentVisualIndex();
+        if (visualIndex >= allCards().length - 1) appendNextSet();
+        else if (visualIndex <= 0) prependPreviousSet();
+      }
+
       dragging = true;
       dragMoved = false;
       dragStartX = event.clientX;
@@ -316,7 +353,7 @@
     window.addEventListener('resize', () => {
       window.cancelAnimationFrame(resizeFrame);
       resizeFrame = window.requestAnimationFrame(() => {
-        jumpTo((count + activeIndex) * step());
+        jumpTo((initialVisualIndex + activeIndex) * step());
         updateActive(false);
       });
     });
