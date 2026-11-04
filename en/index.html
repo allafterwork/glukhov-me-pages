@@ -320,24 +320,31 @@
       dragMoved = false;
       dragStartX = event.clientX;
       dragStartScroll = casesCarousel.scrollLeft;
-      casesCarousel.classList.add('is-dragging');
-      casesCarousel.setPointerCapture(event.pointerId);
     });
 
     casesCarousel.addEventListener('pointermove', (event) => {
-      if (!(event instanceof PointerEvent) || !casesCarousel.hasPointerCapture(event.pointerId)) return;
+      if (!(event instanceof PointerEvent) || event.pointerType === 'touch' || !dragging) return;
       const distance = event.clientX - dragStartX;
-      dragMoved = dragMoved || Math.abs(distance) > 6;
+
+      if (!dragMoved && Math.abs(distance) <= 6) return;
+      if (!dragMoved) {
+        dragMoved = true;
+        casesCarousel.classList.add('is-dragging');
+        casesCarousel.setPointerCapture(event.pointerId);
+      }
+
       casesCarousel.scrollLeft = dragStartScroll - distance;
       updateActive(false);
     });
 
     const finishDrag = (event) => {
-      if (!(event instanceof PointerEvent) || !casesCarousel.hasPointerCapture(event.pointerId)) return;
-      casesCarousel.releasePointerCapture(event.pointerId);
+      if (!(event instanceof PointerEvent) || event.pointerType === 'touch' || !dragging) return;
+      if (casesCarousel.hasPointerCapture(event.pointerId)) {
+        casesCarousel.releasePointerCapture(event.pointerId);
+      }
       casesCarousel.classList.remove('is-dragging');
       dragging = false;
-      animateTo(currentVisualIndex() * step(), 130);
+      if (dragMoved) animateTo(currentVisualIndex() * step(), 130);
     };
 
     casesCarousel.addEventListener('pointerup', finishDrag);
